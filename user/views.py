@@ -65,4 +65,4 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('index')
+    return redirect('user:index')

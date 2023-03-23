@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import Student
+from django.urls import reverse
 # Create your models here.
 
 
@@ -17,4 +18,5 @@ class StudentRegister(models.Model):
     phone_number = models.CharField(max_length=20)
     address=models.CharField(max_length=225)
 
-
+    
+    

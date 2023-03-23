@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    students dashbord
+{% endblock title %}
+
+{% block content %}
+Hello : {{user.first_name}}{{user.last_name}}
+<br>
+{{user.email}} <button>Edit</button> <button> verify</button>
+<br>
+
+<h1>additional detials </h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Send message">
+</form>
+
+
+{% endblock content %}
