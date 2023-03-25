@@ -59,7 +59,7 @@ def user_login(request):
             else:
                 return redirect('index')
         else:
-            return render(request, 'login.html', {'error': 'Invalid email or password'})
+            return render(request, 'registration/login.html', {'error': 'Invalid email or password'})
     else:
         return render(request, 'registration/login.html')
 

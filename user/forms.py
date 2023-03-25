@@ -19,5 +19,5 @@ class StudentCreateForm(UserCreateForm):
     class Meta:
         model = Student
         Student.is_student=True
-        fields = ['email', 'first_name', 'last_name', 'password1', 'password2', ]
+        fields = ['email', 'first_name', 'last_name','phone_number' ,'password1', 'password2', ]
 

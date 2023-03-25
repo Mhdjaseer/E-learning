@@ -45,6 +45,24 @@ class Teacher(User):
         super().save(*args, **kwargs)
 
 class Student(User):
+      phone_number=models.IntegerField()
       def save(self, *args, **kwargs):
         self.is_student = True  # Give the student access
         super().save(*args, **kwargs)
+
+
+class StudentDetials(models.Model):
+    profile_id=models.ForeignKey(Student,on_delete=models.CASCADE)
+    profile_photo=models.ImageField(upload_to='uploads/')
+    date_of_birth=models.DateField()
+    GENDER_CHOICES = [
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other'),
+    ]
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    phone_number = models.CharField(max_length=20)
+    address=models.CharField(max_length=225)
+
+    def __str__(self):
+        return f'{self.profile_id}'

@@ -9,8 +9,18 @@
 <body>
     <h1>the detials about the user</h1>
     <h2>{{ user.first_name}}{{user.last_name}}</h2>
-
-
+    {{user.email}}
+    <form action="" method="post">
+        {% csrf_token %}
+        <!-- {{form.porfile_id}} -->
+        {{form}}
+        <button type="submit">submit</button>
+    </form>
+    {% for i in obj %}
+    {{i}}
+    {{i.gender}}
+        
+    {% endfor %}
 
 </body>
 </html>
