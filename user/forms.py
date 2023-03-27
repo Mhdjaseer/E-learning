@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Teacher, Student
+from .models import User, Teacher, Student,StudentDetials
 
 
 
@@ -21,3 +21,12 @@ class StudentCreateForm(UserCreateForm):
         Student.is_student=True
         fields = ['email', 'first_name', 'last_name', 'password1', 'password2', ]
 
+class StudentDetialsForm(forms.ModelForm):
+    
+    class Meta:
+        model = StudentDetials
+        exclude = ['user']
+        fields = ['address', 'place']
+        
+
+    

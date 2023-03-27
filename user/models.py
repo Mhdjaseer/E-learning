@@ -1,5 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db import models
+from datetime import timedelta
+from django.utils import timezone
+from django.conf import settings
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -47,4 +50,39 @@ class Teacher(User):
 class Student(User):
       def save(self, *args, **kwargs):
         self.is_student = True  # Give the student access
+        self.is_active=True #giving the active status
         super().save(*args, **kwargs)
+
+class StudentDetials(models.Model):
+    user=models.ForeignKey(Student, verbose_name=("student_detials"), on_delete=models.CASCADE)
+    address=models.CharField(max_length=225)
+    place=models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'{self.user}'
+    
+
+
+class Course(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    instructor = models.CharField(max_length=200)
+    duration = models.DurationField(default=timedelta(days=365)) # set default to 1 year
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    image = models.ImageField(upload_to='course_images/')
+    category = models.CharField(max_length=200)
+    level = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.title
+    
+class Purchase(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        end_date = self.course.start_date + self.course.duration
+        return timezone.now().date() <= end_date
