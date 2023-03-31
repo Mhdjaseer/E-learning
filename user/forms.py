@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Teacher, Student,StudentDetials
+from .models import User, Teacher, Student,StudentDetials,Course
 
 
 
@@ -29,4 +29,12 @@ class StudentDetialsForm(forms.ModelForm):
         fields = ['address', 'place']
         
 
-    
+class CourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = '__all__'
+
+    def save(self, commit=True, user=None):
+        if user and not user.is_superuser:
+            raise ValueError('Only superusers can create courses')
+        return super().save(commit)

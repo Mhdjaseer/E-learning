@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'user',
     'students',
 
+    # additional apps
+    'widget_tweaks',#this is use for add class in form field
+
 ]
 
 MIDDLEWARE = [

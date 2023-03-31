@@ -1,11 +1,13 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .forms import UserCreateForm, TeacherCreateForm, StudentCreateForm,StudentDetialsForm
 
 
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-
+# home
 def index(request):
     return render (request,'index.html',{'user': request.user})
 
@@ -48,8 +50,8 @@ def create_teacher(request):
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .models import StudentDetials
-from .forms import StudentDetialsForm
+from .models import StudentDetials,Course, Purchase
+from .forms import StudentDetialsForm,CourseForm
 
 
 class success(LoginRequiredMixin, UpdateView):
@@ -67,7 +69,11 @@ class success(LoginRequiredMixin, UpdateView):
         # Set the user field to the Student instance associated with the current user
         form.instance.user = self.request.user.student
         return super().form_valid(form)
-
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['courses'] = Course.objects.all()
+        return context
 
 
 
@@ -75,16 +81,21 @@ def create_student(request):
     if request.method == 'POST':
         form = StudentCreateForm(request.POST)
         if form.is_valid():
+            
             form.save()
             return redirect("user:success")
+        else:
+            messages.error(request, 'Invalid username,email or password.')
     else:
         form = StudentCreateForm()
-    return render(request, 'create_student.html', {'form': form})
+        
+    return render(request, 'registration/signup.html', {'form': form})
 
-
+# User login  student/teacher/staff/super_admin
 def user_login(request):
     if request.method == 'POST':
         email = request.POST['email']
+        print(email)
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
         if user is not None:
@@ -98,10 +109,45 @@ def user_login(request):
             else:
                 return redirect('index')
         else:
-            return render(request, 'student_login.html', {'error': 'Invalid email or password'})
+            return render(request, 'registration/login.html', {'error': 'Invalid email or password'})
     else:
-        return render(request, 'student_login.html')
+        return render(request, 'registration/login.html')
 
 def user_logout(request):
     logout(request)
     return redirect('user:index')
+
+
+
+
+@login_required
+def purchase_course(request, course_id):
+    course = get_object_or_404(Course, pk=course_id)
+    student = request.user
+    if Purchase.objects.filter(course=course, student=student).exists():
+        messages.warning(request, 'You have already purchased this course.')
+        return redirect('user:dashboard')
+    if request.method == 'POST':
+        purchase = Purchase(course=course, student=student)
+        purchase.save()
+        messages.success(request, 'Course purchased successfully!')
+        return redirect('user:dashboard')
+    return render(request, 'purchase.html', {'course': course})
+
+
+
+# @login_required
+def create_course(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save(user=request.user)
+            return redirect('course_list')
+    else:
+        form = CourseForm()
+    return render(request, 'create_course.html', {'form': form})
+
+@login_required
+def dashboard(request):
+    purchases = Purchase.objects.filter(student=request.user)
+    return render(request, 'dashboard.html', {'purchases': purchases})

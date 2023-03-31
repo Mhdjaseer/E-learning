@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Course creation</h1>
+  <p>{{ course.title }}</p>
+  <form method="POST">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit">
+  </form>
+{% endblock %}
