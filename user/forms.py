@@ -26,7 +26,7 @@ class StudentDetialsForm(forms.ModelForm):
     class Meta:
         model = StudentDetials
         exclude = ['user']
-        fields = ['address', 'place']
+        fields = ['address', 'place','image','date_of_birth','gender','phone_number']
         
 
 class CourseForm(forms.ModelForm):

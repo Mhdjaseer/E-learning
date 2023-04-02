@@ -80,10 +80,10 @@ class success(LoginRequiredMixin, UpdateView):
 def create_student(request):
     if request.method == 'POST':
         form = StudentCreateForm(request.POST)
+        
         if form.is_valid():
-            
             form.save()
-            return redirect("user:success")
+            return redirect("user:login")
         else:
             messages.error(request, 'Invalid username,email or password.')
     else:

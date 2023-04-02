@@ -6,7 +6,7 @@ urlpatterns = [
     path('index/',views.index,name="index"),
     path('user-create/',views.create_user,name="createuser"),
     path('teacher/',views.create_teacher,name="creatTeacher"),
-    path('student/',views.create_student,name="creatStudent"),#student registration 
+    path('student-create/',views.create_student,name="creatStudent"),#student registration 
 
 
     path('student-success/',views.success.as_view(),name="success"),#after login the page have profile and the courselist 
