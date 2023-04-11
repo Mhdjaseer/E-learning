@@ -21,13 +21,14 @@ class StudentCreateForm(UserCreateForm):
         Student.is_student=True
         fields = ['email', 'first_name', 'last_name', 'password1', 'password2', ]
 
-class StudentDetialsForm(forms.ModelForm):
-    
+
+class StudentDetailsForm(forms.ModelForm):
     class Meta:
         model = StudentDetials
-        exclude = ['user']
-        fields = ['address', 'place','image','date_of_birth','gender','phone_number']
-        
+        fields = ('image', 'address', 'place', 'date_of_birth', 'gender', 'phone_number')
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'})
+        }
 
 class CourseForm(forms.ModelForm):
     class Meta:

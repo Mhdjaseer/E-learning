@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .forms import UserCreateForm, TeacherCreateForm, StudentCreateForm,StudentDetialsForm
+from .forms import UserCreateForm, TeacherCreateForm, StudentCreateForm
 
 
 
@@ -50,13 +50,13 @@ def create_teacher(request):
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .models import StudentDetials,Course, Purchase
-from .forms import StudentDetialsForm,CourseForm
+from .models import Course, Purchase,StudentDetials
+from .forms import StudentDetailsForm,CourseForm
 
 
 class success(LoginRequiredMixin, UpdateView):
     model = StudentDetials
-    form_class = StudentDetialsForm
+    form_class = StudentDetailsForm
     template_name = "success.html"
     success_url = reverse_lazy('user:index')
 

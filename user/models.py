@@ -55,7 +55,7 @@ class Student(User):
         super().save(*args, **kwargs)
 
 class StudentDetials(models.Model):
-    user=models.ForeignKey(Student, verbose_name=("student_detials"), on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(upload_to='uploads/students')
     address=models.CharField(max_length=225)
     place=models.CharField(max_length=50)
@@ -66,8 +66,8 @@ class StudentDetials(models.Model):
         ('O', 'Other'),
     ]
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    phone_number = models.CharField(max_length=20)
-    address=models.CharField(max_length=225)
+    phone_number = models.IntegerField()
+  
 
     def __str__(self):
         return f'{self.user}'
