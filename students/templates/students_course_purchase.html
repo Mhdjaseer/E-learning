@@ -1,0 +1,201 @@
+
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block content %}
+  
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      
+      
+      
+      
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href=" {% url 'students:stuedentAccount' %} ">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-faq.html">
+          <i class="bi bi-question-circle"></i>
+          <span>Courses</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-contact.html">
+          <i class="bi bi-envelope"></i>
+          <span>Contact</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-register.html">
+          <i class="bi bi-card-list"></i>
+          <span>Register</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-login.html">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>Login</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-error-404.html">
+          <i class="bi bi-dash-circle"></i>
+          <span>Error 404</span>
+        </a>
+      </li><!-- End Error 404 Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-blank.html">
+          <i class="bi bi-file-earmark"></i>
+          <span>Blank</span>
+        </a>
+      </li><!-- End Blank Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <!-- course list starts  -->
+    
+    <section class="section">
+        <div class="row align-items-top">
+            <section style="background-color: #eee;">
+                <div class="container py-5">
+                    {% for course in courses %}
+                    <div class="row justify-content-center mb-3">
+                    <div class="col-md-12 col-xl-10">
+                      <div class="card shadow-0 border rounded-3">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                              <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(4).webp"
+                                  class="w-100" />
+                                <a href="#!">
+                                  <div class="hover-overlay">
+                                    <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                                  </div>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-6">
+                              <h5>{{ course.title }}</h5>
+                              <div class="d-flex flex-row">
+                                <div class="text-danger mb-1 me-2">
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                </div>
+                                <span>310</span>
+                              </div>
+                              <div class="mt-1 mb-0 text-muted small">
+                                <span>instructor:-{{ course.instructor }}</span>
+                                <!-- <span class="text-primary"> • </span>
+                                <span>Light weight</span>
+                                <span class="text-primary"> • </span>
+                                <span>Best finish<br /></span> -->
+                              </div>
+                              <div class="mb-2 text-muted small">
+                                <span>Leevel</span>
+                                <span class="text-primary"> • </span>
+                                <span>{{ course.level }}</span>
+                                <span class="text-primary"> • </span>
+                                <span>Casual<br /></span>
+                              </div>
+                              <p class="text-truncate mb-4 mb-md-0">
+                                {{ course.description }}    
+                            </p>
+                            </div>
+                            <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                              <div class="d-flex flex-row align-items-center mb-1">
+                                <h4 class="mb-1 me-1">{{ course.price }}</h4>
+                                <span class="text-danger"><s>$20.99</s></span>
+                              </div>
+                              <h6 class="text-success">Free shipping</h6>
+                              <div class="d-flex flex-column mt-4">
+                                <button class="btn btn-primary btn-sm" type="button">Details</button>
+                                <button class="btn btn-outline-primary btn-sm mt-2" type="button">
+                                  Add to wishlist
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {% endfor %}
+                  </div>
+                </div>
+              </section>
+
+              <!-- course list ends  -->
+
+          <h1>Course List</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Instructor</th>
+                <th>Duration</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Level</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for course in courses %}
+                <tr>
+                  <td>{{ course.title }}</td>
+                  <td>{{ course.description }}</td>
+                  <td>{{ course.instructor }}</td>
+                  <td>{{ course.duration }}</td>
+                  <td>{{ course.price }}</td>
+                  <td>{{ course.category }}</td>
+                  <td>{{ course.level }}</td>
+                  <!-- <td><a href="{% url 'user:purchase_course' course.id %}">Select</a></td> -->
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="8">No courses found.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+
+{% endblock content %}
