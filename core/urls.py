@@ -21,7 +21,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/',include('user.urls'),name="user"),
-    path('students/',include('students.urls'),name="students")
+    path('students/',include('students.urls'),name="students"),
+    # path('teachers/',include('teachers.urls'),name='teachers')
 ]
 #Serve media files during development
 if settings.DEBUG:

@@ -29,23 +29,12 @@ def create_teacher(request):
         form = TeacherCreateForm(request.POST)
         if form.is_valid():
             form.save()
-            # do something
+            return redirect('user:login')
     else:
         form = TeacherCreateForm()
-    return render(request, 'create_teacher.html', {'form': form})
+    return render(request, 'registration/teacher_registration/registration.html', {'form': form})
 # ---------------------------------------------------------
-# def success(request):
-#     if request.method == 'POST':
-#         form = StudentDetialsForm(request.POST)
-#         if form.is_valid():
-#             student_details = form.save(commit=False)
-#             student_details.user = request.user.student
-#             student_details.save()
-#             return redirect('user:index')
-#     else:
-#         form = StudentDetialsForm()
 
-#     return render(request,"success.html",{'form':form})
 
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -95,7 +84,6 @@ def create_student(request):
 def user_login(request):
     if request.method == 'POST':
         email = request.POST['email']
-        print(email)
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
         if user is not None:
@@ -103,7 +91,7 @@ def user_login(request):
             if user.is_staff:
                 return redirect('staff_dashboard')
             elif user.is_teacher:
-                return redirect('teacher_dashboard')
+                return redirect('teachers:tr-dahboard')
             elif user.is_student:
                 return redirect('students:index')
             else:

@@ -11,7 +11,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="{% url 'students:index' %}">
+        <a class="nav-link " href="">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -24,14 +24,14 @@
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href=" {% url 'students:stuedentAccount' %} ">
+        <a class="nav-link collapsed" href="  ">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'students:courses' %}">
+        <a class="nav-link collapsed" href="">
           <i class="bi bi-question-circle"></i>
           <span>Courses</span>
         </a>
@@ -89,18 +89,10 @@
     </div><!-- End Page Title -->
     <h1>{{user.email}}</h1>
   
-    {% if purchase %}
-    <h2>Purchased Courses:</h2>
-    <ul>
-      {% for purchase in purchase %}
-        <li>{{ purchase.course.title }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+   
 
 
-
-    {% if student_details_exists %}
+    {% if teacher_details_exists %}
     
  {% else %}
     

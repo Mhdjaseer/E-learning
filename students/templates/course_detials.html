@@ -5,6 +5,30 @@
 
 
 <!-- content -->
+<h1>Purchase Course</h1>
+  <p>{{ course.title }}</p>
+
+
+  {% if messages %}
+  {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+      </div>
+  {% endfor %}
+{% endif %}
+
+{% if purchase %}
+  <p>You have purchased the "{{ purchase.course.title }}" course.</p>
+{% endif %}
+
+
+
+
+  <form method="POST">
+    {% csrf_token %}
+    
+    <input type="submit" value="Confirm Purchase">
+  </form>
 <section class="py-5">
     <div class="container">
       <div class="row gx-5">

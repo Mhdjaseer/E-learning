@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user',
     'students',
+    'teachers',
 
     # additional apps
     'widget_tweaks',#this is use for add class in form field

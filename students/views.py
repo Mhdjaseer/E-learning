@@ -8,6 +8,7 @@ from django.views.generic import TemplateView,FormView
 from django.contrib import messages
 from django.shortcuts import render,redirect,get_object_or_404
 from user.forms import StudentDetailsForm
+from django.contrib.auth.decorators import login_required
 
 # students accountprofile view
 class studentAccount(LoginRequiredMixin, UpdateView):
@@ -67,10 +68,18 @@ class index(LoginRequiredMixin, View):
     template_name = 'students_detials.html'
     success_url = reverse_lazy('student-details')
 
+
+
     def get(self, request):
         form = self.form_class()
         student_details_exists = StudentDetials.objects.filter(user=request.user).exists()
-        context = {'form': form, 'student_details_exists': student_details_exists}
+        purchase=Purchase.objects.filter(student=request.user).select_related('course')
+
+        context = {'form': form,
+                    'student_details_exists': student_details_exists,
+                    'purchase':purchase
+                    }
+
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -87,26 +96,27 @@ class index(LoginRequiredMixin, View):
             return render(request, self.template_name, context)
         
 #student course view and purchase
-class students_course_purchase(TemplateView):
+class students_course_purchase(LoginRequiredMixin,TemplateView):
     template_name='students_course_purchase.html'
-
-    # def get(self,request,course_id):
-    #     course=get_object_or_404(Course,pk=course_id)
-    #     student=request.user
-    #     if Purchase.objects.filter(course=course,student=student).exists():
-    #         print("you have already purchased")
-    #         # return redirect('students:course')
-    #     if request.method=='POST':
-    #         purchase=Purchase(course=course,student=student)
-    #         purchase.save()
-    #         print("successfully purchased")
-    #         # return redirect ('students:dashbord)
-    #         context={
-    #             'course':course
-    #         }
-    #     return render(request,'students_course_purchase.html',context)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['courses'] = Course.objects.all()
         return context
+
+# course purchase need ot edit 
+@login_required
+def purchase_course(request, course_id):
+    course = get_object_or_404(Course, pk=course_id)
+    student = request.user
+    if Purchase.objects.filter(course=course, student=student).exists():
+        messages.warning(request, 'You have already purchased this course.')
+        # return redirect('user:dashboard')
+        # print("yes user is already purchased ")
+    elif request.method == 'POST':
+        purchase = Purchase(course=course, student=student)
+        purchase.save()
+        messages.success(request, 'Course purchased successfully!')
+        return redirect('students:courses')
+    return render(request, 'course_detials.html', {'course': course})
+
