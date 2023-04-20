@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Teacher, Student,StudentDetials,Course
+from .models import User, Teacher, Student,StudentDetials,Course,TeacherDetials
 
 
 
@@ -14,6 +14,16 @@ class TeacherCreateForm(UserCreateForm):
         model = Teacher
         
         fields = ['email', 'first_name', 'last_name', 'password1', 'password2',]
+
+
+class TeacherDetailsForm(forms.ModelForm):
+    class Meta:
+        model = TeacherDetials
+        fields = ('image', 'address', 'place', 'date_of_birth', 'gender', 'phone_number')
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'})
+        }
+
 
 class StudentCreateForm(UserCreateForm):
     class Meta:

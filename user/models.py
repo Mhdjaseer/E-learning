@@ -46,7 +46,28 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Teacher(User):
    def save(self, *args, **kwargs):
         self.is_teacher = True  # Give the teacher  access
+        self.is_active=True #giving the active status
         super().save(*args, **kwargs)
+
+class TeacherDetials(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    image = models.ImageField(upload_to='uploads/students')
+    address=models.CharField(max_length=225)
+    place=models.CharField(max_length=50)
+    date_of_birth=models.DateField(null=True, blank=True)
+    GENDER_CHOICES = [
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other'),
+    ]
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    phone_number = models.IntegerField()
+  
+
+    def __str__(self):
+        return f'{self.user}'
+    
+
 
 class Student(User):
       def save(self, *args, **kwargs):

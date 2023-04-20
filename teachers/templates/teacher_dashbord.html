@@ -11,7 +11,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="">
+        <a class="nav-link " href="{% url 'students:index' %}">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -24,14 +24,14 @@
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="  ">
+        <a class="nav-link collapsed" href=" {% url 'students:stuedentAccount' %} ">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="">
+        <a class="nav-link collapsed" href="{% url 'students:courses' %}">
           <i class="bi bi-question-circle"></i>
           <span>Courses</span>
         </a>
@@ -89,11 +89,12 @@
     </div><!-- End Page Title -->
     <h1>{{user.email}}</h1>
   
-   
+    
+
 
 
     {% if teacher_details_exists %}
-    
+    <h1>its already exists</h1>
  {% else %}
     
 
