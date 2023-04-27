@@ -3,6 +3,10 @@ from django.db import models
 from datetime import timedelta
 from django.utils import timezone
 from django.conf import settings
+from django.core.validators import RegexValidator
+
+
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -110,11 +114,25 @@ class Course(models.Model):
     def __str__(self):
         return self.title
     
+
+class Teacher_Course_Select(models.Model):
+    course=models.ForeignKey(Course,on_delete=models.CASCADE)
+    instructor= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        end_date = self.course.start_date + self.course.duration
+        return timezone.now().date() <= end_date
+    
+    def __str__(self):
+        return str(self.instructor)
+    
 class Purchase(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Teacher_Course_Select, on_delete=models.CASCADE)
     student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
 
     def is_valid(self):
         end_date = self.course.start_date + self.course.duration
         return timezone.now().date() <= end_date
+    

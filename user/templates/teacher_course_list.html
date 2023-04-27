@@ -7,18 +7,22 @@
     <title>success</title>
 </head>
 <body>
-    <h1>success</h1>
+    <h1>teaher course list</h1>
     {{user.first_name}}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{form}}
-        <button type="submit">submit</button>
-    </form>
-{% if purchase %}
-<p>You have purchased the {{ purchase.course.title }} course.</p>
-{% endif %}
-{% if courses %}
-<h2>Your courses:</h2>
+    {% if select_course %}
+    {% for sc in select_course %}
+    <p>You have purchased the {{ sc.course.title }} course.</p>
+  {% endfor %}
+    
+    {% else %}
+    <p>select_course is None</p>
+    {% endif %}
+
+    
+
+
+{% if select_course %}
+<h2>Course list are:</h2>
 <ul>
 {% for course in courses %}
 <li>{{ course.title }}</li>
@@ -58,8 +62,8 @@
             <td>{{ course.price }}</td>
             <td>{{ course.category }}</td>
             <td>{{ course.level }}</td>
-            <td><a href="{% url 'user:purchase_course' course.id %}">Select</a></td>
-            <td><a href="{% url 'user:select' course.id %}">Select</a></td>
+            <!-- <td><a href="{% url 'user:purchase_course' course.id %}">Select</a></td> -->
+            <td><a href="{% url 'user:selectCourse' course.id %}">Select</a></td>
           </tr>
         {% empty %}
           <tr>
