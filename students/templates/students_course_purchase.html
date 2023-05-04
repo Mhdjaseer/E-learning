@@ -81,7 +81,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Courses</li>
+          <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -101,7 +101,7 @@
                           <div class="row">
                             <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                               <div class="bg-image hover-zoom ripple rounded ripple-surface">
-                                <img src="{{ course.course.image.url }}"
+                                <img src="{{ course.image.url }}"
                                   class="w-100" />
                                 <a href="#!">
                                   <div class="hover-overlay">
@@ -111,7 +111,7 @@
                               </div>
                             </div>
                             <div class="col-md-6 col-lg-6 col-xl-6">
-                              <h5>{{ course.course.title }}</h5>
+                              <h5>{{ course.title }}</h5>
                               <div class="d-flex flex-row">
                                 <div class="text-danger mb-1 me-2">
                                   <i class="fa fa-star"></i>
@@ -131,17 +131,17 @@
                               <div class="mb-2 text-muted small">
                                 <span>Leevel</span>
                                 <span class="text-primary"> • </span>
-                                <span>{{ course.course.level }}</span>
+                                <span>{{ course.level }}</span>
                                 <span class="text-primary"> • </span>
                                 <span>Casual<br /></span>
                               </div>
                               <p class="text-truncate mb-4 mb-md-0">
-                                {{ course.course.description }}    
+                                {{ course.description }}    
                             </p>
                             </div>
                             <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                               <div class="d-flex flex-row align-items-center mb-1">
-                                <h4 class="mb-1 me-1">{{ course.course.price }}</h4>
+                                <h4 class="mb-1 me-1">{{ course.price }}</h4>
                                 <span class="text-danger"><s>$20.99</s></span>
                               </div>
                               <h6 class="text-success">Free shipping</h6>

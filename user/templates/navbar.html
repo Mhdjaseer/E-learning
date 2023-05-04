@@ -5,7 +5,7 @@
         <div class="row align-items-center py-4 px-xl-5">
             <div class="col-lg-3">
                 <a href="" class="text-decoration-none">
-                    <h1 class="m-0"><span class="text-primary">L</span>ogo</h1>
+                    <h1 class="m-0"><span class="text-primary">E</span>COURSES</h1>
                 </a>
             </div>
             <div class="col-lg-3 text-right">
@@ -77,18 +77,18 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav py-0">
-                            <a href=" {% url 'user:index' %} " class="nav-item nav-link active">Home</a>
-                            <a href=" {% url 'user:about' %} " class="nav-item nav-link">About Us</a>
-                            <a href="{% url 'user:creatTeacher' %}" class="nav-item nav-link">Become a tutor</a>
-                            <a href=" {% url 'user:teachers' %} " class="nav-item nav-link">Find Tutor</a>
-                            <!-- <div class="nav-item dropdown">
+                            <a href="index.html" class="nav-item nav-link active">Home</a>
+                            <a href="about.html" class="nav-item nav-link">About Us</a>
+                            <a href="course.html" class="nav-item nav-link">Become a tutor</a>
+                            <a href="teacher.html" class="nav-item nav-link">Find Tutor</a>
+                            <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Blog</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="blog.html" class="dropdown-item">Blog List</a>
                                     <a href="single.html" class="dropdown-item">Blog Detail</a>
                                 </div>
-                            </div> -->
-                            <a href=" {% url 'user:contact' %} " class="nav-item nav-link">Contact</a>
+                            </div>
+                            <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
                         {% if user.is_authenticated %}
                        

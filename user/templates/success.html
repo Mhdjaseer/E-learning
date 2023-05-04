@@ -59,7 +59,6 @@
             <td>{{ course.category }}</td>
             <td>{{ course.level }}</td>
             <td><a href="{% url 'user:purchase_course' course.id %}">Select</a></td>
-            <td><a href="{% url 'user:select' course.id %}">Select</a></td>
           </tr>
         {% empty %}
           <tr>
