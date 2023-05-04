@@ -1,0 +1,118 @@
+
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block content %}
+  
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'teachers:tr-dahboard' %}">
+             
+              <i class="bi bi-grid"></i>
+              <span>Dashboard</span>
+            </a>
+          </li><!-- End Contact Page Nav -->
+      
+      
+      
+      
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href=" {% url 'teachers:teacher-profile' %} ">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'teachers:course-list' %}">
+          <i class="fa-solid fa-list"></i>
+          <span>Course list</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      
+      
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'teachers:student-purchased' %}">
+            <i class="fa-solid fa-people-arrows"></i>
+          <span>Students</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-register.html">
+          <i class="bi bi-card-list"></i>
+          <span>Register</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-login.html">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>Login</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-error-404.html">
+          <i class="bi bi-dash-circle"></i>
+          <span>Error 404</span>
+        </a>
+      </li><!-- End Error 404 Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-blank.html">
+          <i class="bi bi-file-earmark"></i>
+          <span>Blank</span>
+        </a>
+      </li><!-- End Blank Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Students</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Students</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <h5 class="card-title"> Students Purchased courses</h5>
+{% if student_purchase_course %}
+<div class="row">
+    <div class="col-6">
+      <ol class="list-group list-group-numbered">
+{% for i in student_purchase_course %}
+<li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">{{ i.course.course.title }} </div>
+      {{i.student.first_name}}
+    </div>
+    <p class="font-weight-normal">{{i.date}}</p>
+    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+      <i class="bi bi-check-circle-fill fa-xl text-success "></i>
+      <i class="bi bi-box-arrow-up-right fa-xl px-4"></i>
+      
+      <i class="bi bi-chat-left-text fa-xl"></i>
+      
+      <!-- <span class="badge bg-success badge-number">3</span> -->
+    </a><!-- End Messages Icon -->
+  </li>
+ 
+ 
+{% endfor %}
+    
+{% endif %}
+{% endblock content %}

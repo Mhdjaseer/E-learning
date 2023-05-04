@@ -78,7 +78,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Users</li>
+          <li class="breadcrumb-item">Students</li>
           <li class="breadcrumb-item active">Profile</li>
         </ol>
       </nav>
@@ -92,10 +92,10 @@
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
              
 
-             <img src="{{ student_details.image.url }}" class="rounded-circle" alt="Student image">
+             <img src="{{ student_details.image.url }}" class="rounded" alt="Student image">
 
               <h2>{{user.first_name}} {{user.last_name}}</h2>
-              <h3>Students</h3>
+              <h3>Student</h3>
              
             </div>
           </div>
@@ -121,9 +121,9 @@
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Additional information</button>
                 </li>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                </li>
+                </li> -->
 
               </ul>
               <div class="tab-content pt-2">
@@ -175,7 +175,7 @@
                   <form method="post">
                     {% csrf_token %}
                     <!-- {{form}} -->
-                    <div class="row mb-3">
+                    <!-- <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
                         <img src=" {% static 'assets/img/profile-img.jpg' %} " alt="Profile">
@@ -184,7 +184,7 @@
                           <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
@@ -237,9 +237,9 @@
                   </form>
                 </div>
 
-                <div class="tab-pane fade pt-3" id="profile-change-password">
+                <!-- <div class="tab-pane fade pt-3" id="profile-change-password"> -->
                   <!-- Change Password Form -->
-                  <form>
+                  <!-- <form>
 
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
@@ -265,9 +265,9 @@
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Change Password</button>
                     </div>
-                  </form><!-- End Change Password Form -->
+                  </form> End Change Password Form -->
 
-                </div>
+                <!-- </div>  -->
 
               </div><!-- End Bordered Tabs -->
 

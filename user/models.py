@@ -3,50 +3,67 @@ from django.db import models
 from datetime import timedelta
 from django.utils import timezone
 from django.conf import settings
+from django.core.validators import RegexValidator
+from twilio.rest import Client
+import random
+import re
+phone_regex = RegexValidator(
+    regex=r'^\+?1?\d{9,15}$',
+    message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+)
+
+
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError('Users must have an email address')
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+    def normalize_phone_number(self, phone_number):
+        """
+        Normalize the phone number by removing all non-digit characters
+        """
+        return re.sub(r'\D', '', phone_number)
+    def create_user(self, phone_number, password=None, **extra_fields):
+        if not phone_number:
+            raise ValueError('Users must have a phone number')
+        phone_number = self.normalize_phone_number(phone_number)
+        user = self.model(phone_number=phone_number, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
+    def create_superuser(self, phone_number, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
-        return self.create_user(email, password, **extra_fields)
-
+        return self.create_user(phone_number, password, **extra_fields)
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
+    phone_number = models.CharField(validators=[phone_regex], max_length=17, unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
+    otp = models.CharField(max_length=6, blank=True, null=True)
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):
-        return self.email
+        return self.phone_number
 
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'
 
     def get_short_name(self):
         return self.first_name
+    
+
 
 class Teacher(User):
    def save(self, *args, **kwargs):
         self.is_teacher = True  # Give the teacher  access
-        self.is_active=True #giving the active status
+        self.is_active=False #giving the active status
         super().save(*args, **kwargs)
 
 class TeacherDetials(models.Model):
@@ -72,7 +89,7 @@ class TeacherDetials(models.Model):
 class Student(User):
       def save(self, *args, **kwargs):
         self.is_student = True  # Give the student access
-        self.is_active=True #giving the active status
+        self.is_active=False #giving the active status
         super().save(*args, **kwargs)
 
 class StudentDetials(models.Model):
@@ -110,11 +127,25 @@ class Course(models.Model):
     def __str__(self):
         return self.title
     
+
+class Teacher_Course_Select(models.Model):
+    course=models.ForeignKey(Course,on_delete=models.CASCADE)
+    instructor= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        end_date = self.course.start_date + self.course.duration
+        return timezone.now().date() <= end_date
+    
+    def __str__(self):
+        return str(self.instructor)
+    
 class Purchase(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Teacher_Course_Select, on_delete=models.CASCADE)
     student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
 
     def is_valid(self):
         end_date = self.course.start_date + self.course.duration
         return timezone.now().date() <= end_date
+    

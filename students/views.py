@@ -2,13 +2,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView,CreateView
 from django.views import View
-from user.models import Student,StudentDetials,Course,Purchase
+from user.models import Student,StudentDetials,Course,Purchase,Teacher_Course_Select
 from .forms import StudentForm
 from django.views.generic import TemplateView,FormView
 from django.contrib import messages
 from django.shortcuts import render,redirect,get_object_or_404
 from user.forms import StudentDetailsForm
 from django.contrib.auth.decorators import login_required
+import random
 
 # students accountprofile view
 class studentAccount(LoginRequiredMixin, UpdateView):
@@ -72,9 +73,9 @@ class index(LoginRequiredMixin, View):
 
     def get(self, request):
         form = self.form_class()
-        student_details_exists = StudentDetials.objects.filter(user=request.user).exists()
+        student_details_exists = StudentDetials.objects.filter(user=request.user).first()
         purchase=Purchase.objects.filter(student=request.user).select_related('course')
-
+        
         context = {'form': form,
                     'student_details_exists': student_details_exists,
                     'purchase':purchase
@@ -99,15 +100,22 @@ class index(LoginRequiredMixin, View):
 class students_course_purchase(LoginRequiredMixin,TemplateView):
     template_name='students_course_purchase.html'
     
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs,):
         context = super().get_context_data(**kwargs)
-        context['courses'] = Course.objects.all()
+        context['courses'] = list(Teacher_Course_Select.objects.all())
+        user=self.request.user
+        context['student_detials_print']=StudentDetials.objects.filter(user=user).first()
+        
+        random.shuffle(context['courses'])
         return context
+
+
+
 
 # course purchase need ot edit 
 @login_required
 def purchase_course(request, course_id):
-    course = get_object_or_404(Course, pk=course_id)
+    course = get_object_or_404(Teacher_Course_Select, pk=course_id)
     student = request.user
     if Purchase.objects.filter(course=course, student=student).exists():
         messages.warning(request, 'You have already purchased this course.')
@@ -120,3 +128,10 @@ def purchase_course(request, course_id):
         return redirect('students:courses')
     return render(request, 'course_detials.html', {'course': course})
 
+
+
+# error in this search bar 
+def search_view(request):
+    query = request.GET.get('q')
+    results = Teacher_Course_Select.objects.filter(course__icontains=query)
+    return render(request, 'search_results.html', {'results': results})

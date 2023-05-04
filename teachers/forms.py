@@ -5,7 +5,7 @@ from user.models import Teacher
 class StudentForm(UserChangeForm):
     class Meta:
         model =Teacher
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('phone_number', 'first_name', 'last_name')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -13,7 +13,7 @@ class StudentForm(UserChangeForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if email and Teacher.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+        if email and Teacher.objects.filter(phone_number=email).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('This email is already in use.')
         return email
 

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>teacher selected the course</h1>
+  <p>{{ course.title }}</p>
+  <form method="POST">
+    {% csrf_token %}
+    
+    <input type="submit" value="Confirm Purchase">
+  </form>
+
+  {% if purchase %}
+<p>You have purchased the {{ select_course.course.title }} course.</p>
+{% endif %}
+{% if courses %}
+<h2>Your courses:</h2>
+<ul>
+{% for course in courses %}
+<li>{{ course.title }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+
+{% endblock %}

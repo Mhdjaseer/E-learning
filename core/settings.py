@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
     # additional apps
     'widget_tweaks',#this is use for add class in form field
-
+    'channels',#this is for students and teacher chat
     'compressor',  # new this is flowbit tailwind css
 
 ]
@@ -146,3 +146,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # LOGIN_REDIRECT_URL = 'user:success'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+
+TWILIO_ACCOUNT_SID = 'ACcfcc6645d9cb4d0fce93402ee7a2eade'
+TWILIO_AUTH_TOKEN = 'e29cc14f8dd2d4e24af341a83e01a6d2'
+TWILIO_PHONE_NUMBER = '+16203838737'
